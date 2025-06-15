@@ -4,10 +4,12 @@ import './App.css'
 function App() {
   let [count, setCount] = useState(0)
   function Addcount(){
-    setCount(count+1)
+     if (count===20) pass
+    else setCount(count+1)
   }
   function Removecount(){
-    setCount(count-1)
+    if (count===0) pass
+    else setCount(count-1)
   }
 
  
@@ -15,8 +17,8 @@ function App() {
     <>
       <h1>React Counter</h1>
       <p>Count is {count}</p>
-      <button onClick={Addcount}>Increase Count</button>
-      <button onClick={Removecount} >Decrease Count</button>
+      <button onClick={Addcount}>Increase Count {count}</button>
+      <button onClick={Removecount} >Decrease Count {count}</button>
     </>
   )
 }
