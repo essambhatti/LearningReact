@@ -1,5 +1,5 @@
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import './App.css'
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
   const [number, setNumber]= useState(false)
   const [character, setcharacter]= useState(false)
   const [password, setPassword]= useState("")
+  const passwordRef = useRef(null)
 
   const generatePassword = useCallback(()=>{
 
@@ -22,6 +23,11 @@ function App() {
 
   }, [length, number, character])
 
+  const copyToClipboard = useCallback(()=>{
+      passwordRef.current?.select()
+      window.navigator.clipboard.writeText(password)
+  }, [password])
+
  
   useEffect(()=>
 
@@ -34,12 +40,12 @@ function App() {
 
     <>
     
-      <div className='bg-gray-400 text-white h-100 flex-col items-center justify-center '>
-        <h2>Password Generator</h2>
+      <div className='bg-gray-400 text-white h-100 flex flex-col items-center justify-center gap-5'>
+        <h2 className='text-3xl'>Password Generator</h2>
         <div>
-          <input type="text" value={password} readOnly className='bg-white text-black' placeholder='Password'/>
+          <input type="text" value={password} readOnly className='bg-white text-black w-100' ref={passwordRef} placeholder='Password'/>
         
-          <button className='text-white bg-blue-500 w-25' >Copy</button>
+          <button className='text-white bg-blue-500 w-25' onClick={copyToClipboard}>Copy</button>
         </div>
         <div>
         <input type='range' min={6} max={100} onChange={(e)=>{setLength(parseInt(e.target.value))}} value={length}/><p>Length {length}</p>
